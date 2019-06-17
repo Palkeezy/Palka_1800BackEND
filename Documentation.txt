@@ -1,0 +1,45 @@
+AUTH controller*
+POST /auth/user  BODY - {
+			"email": "test@gmail.com",
+			"password": "123"
+			}
+
+COMMENTS controller*
+POST /comments/:id   BODY - 	{
+			"description" : "test",
+			"mark" : "5"
+				}.
+		     HEADERS: Authorization: TOKEN
+DELETE /comments/:id , HEADERS: Authorization: TOKEN
+GET /comments/     QUERY - limit, page.
+			HEADERS: Authorization: TOKEN
+
+DEPARTMENT controller*
+POST /department    BODY - {"description" : "test"}.
+GET /department.
+GET /department/:id    
+
+DOCTOR controller*
+POST /doctor    BODY - {
+			"name" : "test",
+			"surname" : "Test",
+			"experience" : "Test",
+			"phone" : "380",
+			"email" : "test@gmail.com",
+			"password" : "123",
+			"office" : "test",
+			"department" : 5,
+			"working" : "test"
+						}.
+GET /doctor  QUERY - name=Di.
+				HEADERS: Authorization: TOKEN
+GET /doctor/:id          
+
+USER controller*
+POST /user       BODY - {
+			"name" : "test",
+			"surname" : "Test",
+			"email" : "test@gmail.com",
+			"password" : "123",
+			"phone" : "380"
+			}. 

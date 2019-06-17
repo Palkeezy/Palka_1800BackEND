@@ -1,0 +1,87 @@
+create schema if not exists Palka_1800;
+
+use Palka_1800;
+
+create table if not exists department
+(
+    id          int auto_increment
+        primary key,
+    description varchar(40) not null
+);
+
+create table if not exists doctor
+(
+    id            int auto_increment
+        primary key,
+    name          varchar(50)  not null,
+    surname       varchar(50)  not null,
+    experience    varchar(100) not null,
+    phone         varchar(40)  not null,
+    email         varchar(50)  not null,
+    password      varchar(50)  not null,
+    office        varchar(30)  not null,
+    department_id int          null,
+    working	  varchar(200) not null,
+    constraint doctor_email_uindex
+        unique (email),
+    constraint doctor_phone_uindex
+        unique (phone),
+    constraint doctor_department_id_fk
+        foreign key (department_id) references department (id)
+            on update cascade on delete set null
+);
+
+create table if not exists user
+(
+    id       int auto_increment
+        primary key,
+    name     varchar(30) not null,
+    surname  varchar(40) not null,
+    email    varchar(50) not null,
+    password varchar(50) not null,
+    phone    varchar(40) not null,
+    constraint user_email_uindex
+        unique (email),
+    constraint user_phone_uindex
+        unique (phone)
+);
+
+create table if not exists comments
+(
+    id          int auto_increment
+        primary key,
+    doctor_id   int          null,
+    user_id     int          null,
+    description varchar(100) null,
+    mark        varchar(5)   null,
+    constraint comments_doctor_id_fk
+        foreign key (doctor_id) references doctor (id)
+            on update cascade on delete cascade,
+    constraint comments_user_id_fk
+        foreign key (user_id) references user (id)
+            on update cascade on delete cascade
+);
+
+
+
+
+
+
+INSERT INTO department(description) VALUE ('Dental department');
+INSERT INTO department(description) VALUE ('Neurology department');
+INSERT INTO department(description) VALUE ('Therapeutic department');
+INSERT INTO department(description) VALUE ('Cardiology department');
+
+INSERT INTO doctor(name, surname, experience, phone, email, office, department_id, working) VALUE ('Dima', 'Petrov' , 'Kardiolog', '+380638888888', 'dimasik@mail.ru', '1111', '4th floor, 405 cabinet', 8, 'Mon-Fri: 9.00-18.00');
+INSERT INTO doctor(name, surname, experience, phone, email, office, department_id, working) VALUE ('Yura', 'Holinka' , 'Therapevt', '+380637777777', 'yurii@mail.ru', '2222', '3th floor, 305 cabinet', 7, 'Mon-Fri: 9.00-18.00');
+INSERT INTO doctor(name, surname, experience, phone, email, office, department_id, working) VALUE ('Nazar', 'Zharskiy' , 'Nevropatolog', '+380636666666', 'nazik@mail.ru', '3333', '2th floor, 205 cabinet', 6, 'Mon-Fri: 9.00-18.00');
+INSERT INTO doctor(name, surname, experience, phone, email, office, department_id, working) VALUE ('Vitalii', 'Palka' , 'Dantist', '+380635555555', 'vitalik@mail.ru', '4444', '1th floor, 105 cabinet', 5, 'Mon-Fri: 9.00-18.00');
+
+
+INSERT INTO user(name, surname, email, password, phone) VALUE ('Max', 'Kitav', 'max@mail.ru', '1', '+111');
+INSERT INTO user(name, surname, email, password, phone) VALUE ('Tema', 'Kent', 'artemka@mail.ru', '2', '+222');
+INSERT INTO user(name, surname, email, password, phone) VALUE ('Andrew', 'Std', 'and@mail.ru', '3', '+333');
+INSERT INTO user(name, surname, email, password, phone) VALUE ('Glen', 'Oreo', 'glen@mail.ru', '4', '+444');
+
+INSERT INTO comments(doctor_id, user_id, description, mark) VALUE (2, 1, 'asdas', '5');
+INSERT INTO comments(doctor_id, user_id, description, mark) VALUE (1, 3, 'qwerq', '4');
